@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('title', 'Dashboard - ePharma POS'); ?>
 
 <?php $__env->startSection('content'); ?>

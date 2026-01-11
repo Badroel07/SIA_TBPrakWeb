@@ -1,19 +1,17 @@
-@extends('cashier.layouts.app', ['activeMenu' => 'pos'])
+<?php $__env->startSection('title', 'Point of Sale - ePharma POS'); ?>
 
-@section('title', 'Point of Sale - ePharma POS')
-
-@section('bodyAttributes')
+<?php $__env->startSection('bodyAttributes'); ?>
 x-data="cashierApp"
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('styles')
-<meta name="csrf-token" content="{{ csrf_token() }}">
+<?php $__env->startPush('styles'); ?>
+<meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 <style>
     body { zoom: 90%; height: 111.1vh; }
 </style>
-@endpush
+<?php $__env->stopPush(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <!-- Main Content Layout -->
     <div class="flex flex-1 overflow-hidden h-full">
         <!-- Left Column: Product Catalog -->
@@ -44,13 +42,13 @@ x-data="cashierApp"
                         <p class="text-sm font-bold leading-normal">Semua Item</p>
                     </button>
 
-                    @foreach ($existingCategories as $cat)
-                        <button @click="category = '{{ $cat }}'"
+                    <?php $__currentLoopData = $existingCategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <button @click="category = '<?php echo e($cat); ?>'"
                             class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg pl-3 pr-4 transition-all"
-                            :class="category === '{{ $cat }}' ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20' : 'bg-white border border-slate-200 text-slate-900 hover:border-blue-600/50'">
-                            <p class="text-sm font-medium leading-normal capitalize">{{ $cat }}</p>
+                            :class="category === '<?php echo e($cat); ?>' ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20' : 'bg-white border border-slate-200 text-slate-900 hover:border-blue-600/50'">
+                            <p class="text-sm font-medium leading-normal capitalize"><?php echo e($cat); ?></p>
                         </button>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
             </div>
 
@@ -267,8 +265,8 @@ x-data="cashierApp"
                     <span class="text-2xl font-bold text-blue-600" x-text="'Rp ' + formatPrice(total)"></span>
                 </div>
 
-                <form action="{{ route('cashier.transaction.processPayment') }}" method="POST" class="space-y-3">
-                    @csrf
+                <form action="<?php echo e(route('cashier.transaction.processPayment')); ?>" method="POST" class="space-y-3">
+                    <?php echo csrf_field(); ?>
                     <input type="hidden" name="invoice_number" :value="invoiceNumber">
                     <input type="hidden" name="total_amount" :value="total">
                     <input type="hidden" name="cart_data" :value="JSON.stringify(cart)">
@@ -303,13 +301,13 @@ x-data="cashierApp"
             </div>
         </div>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('scripts')
+<?php $__env->startPush('scripts'); ?>
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('cashierApp', () => ({
-                medicines: @json($initialMedicines),
+                medicines: <?php echo json_encode($initialMedicines, 15, 512) ?>,
                 cart: {},
                 search: '',
                 category: 'all',
@@ -320,7 +318,7 @@ x-data="cashierApp"
                 cashReceivedInput: '',
                 // Pagination state
                 currentPage: 1,
-                hasMore: @json($hasMoreMedicines),
+                hasMore: <?php echo json_encode($hasMoreMedicines, 15, 512) ?>,
                 loadingMore: false,
                 // Search state
                 isSearching: false,
@@ -330,7 +328,7 @@ x-data="cashierApp"
 
                 init() {
                     // Initialize cart from localStorage or Session
-                    const sessionSuccess = @json(session('success') ? true : false);
+                    const sessionSuccess = <?php echo json_encode(session('success') ? true : false, 15, 512) ?>;
                     if (sessionSuccess) {
                         localStorage.removeItem('pos_cart');
                         this.cart = {};
@@ -339,7 +337,7 @@ x-data="cashierApp"
                         if (storedCart) {
                             try { this.cart = JSON.parse(storedCart); } catch (e) { this.cart = {}; }
                         } else {
-                            const sessionCart = @json(session('cart', []));
+                            const sessionCart = <?php echo json_encode(session('cart', []), 512) ?>;
                             if (Object.keys(sessionCart).length > 0) this.cart = sessionCart;
                         }
                     }
@@ -371,7 +369,7 @@ x-data="cashierApp"
                 async searchFromServer(searchTerm) {
                     this.isSearching = true;
                     try {
-                        const response = await fetch(`{{ route('cashier.transaction.index') }}?search=${encodeURIComponent(searchTerm)}`, {
+                        const response = await fetch(`<?php echo e(route('cashier.transaction.index')); ?>?search=${encodeURIComponent(searchTerm)}`, {
                             headers: {
                                 'X-Requested-With': 'XMLHttpRequest'
                             }
@@ -397,7 +395,7 @@ x-data="cashierApp"
                     // this.medicines = []; 
                     
                     try {
-                        const response = await fetch(`{{ route('cashier.transaction.index') }}?page=1&category=${encodeURIComponent(category)}`, {
+                        const response = await fetch(`<?php echo e(route('cashier.transaction.index')); ?>?page=1&category=${encodeURIComponent(category)}`, {
                             headers: {
                                 'X-Requested-With': 'XMLHttpRequest'
                             }
@@ -425,7 +423,7 @@ x-data="cashierApp"
                     
                     this.loadingMore = true;
                     try {
-                        const response = await fetch(`{{ route('cashier.transaction.index') }}?page=${this.currentPage + 1}&category=${encodeURIComponent(this.category)}`, {
+                        const response = await fetch(`<?php echo e(route('cashier.transaction.index')); ?>?page=${this.currentPage + 1}&category=${encodeURIComponent(this.category)}`, {
                             headers: {
                                 'X-Requested-With': 'XMLHttpRequest'
                             }
@@ -553,4 +551,5 @@ x-data="cashierApp"
             }));
         });
     </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('cashier.layouts.app', ['activeMenu' => 'pos'], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\laragon\www\SIA_TBPrakWeb\resources\views/cashier/transaction/index.blade.php ENDPATH**/ ?>

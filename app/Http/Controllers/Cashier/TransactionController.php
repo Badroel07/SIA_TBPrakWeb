@@ -34,7 +34,7 @@ class TransactionController extends Controller
             }
             
             // Pagination for load more
-            $perPage = 20;
+            $perPage = 24;
             $page = $request->input('page', 1);
             
             // Apply category filter if provided
@@ -87,11 +87,11 @@ class TransactionController extends Controller
         // Load only first 20 medicines initially (for Load More pagination)
         $initialMedicines = Medicine::select('id', 'name', 'price', 'stock', 'category', 'image')
             ->orderBy('name', 'asc')
-            ->take(20)
+            ->take(24)
             ->get();
 
         $totalMedicinesCount = Medicine::count();
-        $hasMoreMedicines = $totalMedicinesCount > 20;
+        $hasMoreMedicines = $totalMedicinesCount > 24;
 
         $existingCategories = Medicine::select('category')
             ->distinct()
