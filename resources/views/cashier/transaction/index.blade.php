@@ -8,9 +8,7 @@ x-data="cashierApp"
 
 @push('styles')
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<style>
-    body { zoom: 90%; height: 111.1vh; }
-</style>
+
 @endpush
 
 @section('content')

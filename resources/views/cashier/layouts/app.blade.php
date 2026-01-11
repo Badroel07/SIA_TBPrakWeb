@@ -28,7 +28,11 @@
     <style>
         [x-cloak] { display: none !important; }
         .font-display { font-family: 'Parkinsans', sans-serif; }
-        body { font-family: 'Parkinsans', sans-serif; }
+        body { 
+            font-family: 'Parkinsans', sans-serif; 
+            zoom: 90%; 
+            height: 111.1vh;
+        }
     </style>
     @stack('styles')
 </head>
