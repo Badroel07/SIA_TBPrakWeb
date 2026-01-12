@@ -18,6 +18,11 @@ class TransactionController extends Controller
         if ($request->ajax()) {
             $query = Medicine::select('id', 'name', 'price', 'stock', 'category', 'image', 'description', 'full_indication', 'usage_detail', 'side_effects', 'total_sold');
             
+            // Apply category filter first if provided (applies to both search and pagination)
+            if ($request->filled('category') && $request->input('category') !== 'all') {
+                $query->where('category', $request->input('category'));
+            }
+            
             // Apply search if provided
             if ($request->filled('search')) {
                 $searchTerm = $request->input('search');
@@ -37,10 +42,7 @@ class TransactionController extends Controller
             $perPage = 24;
             $page = $request->input('page', 1);
             
-            // Apply category filter if provided
-            if ($request->filled('category') && $request->input('category') !== 'all') {
-                $query->where('category', $request->input('category'));
-            }
+            // Category filter is already applied above (for both search and pagination)
             
             $medicines = $query->orderBy('name', 'asc')
                 ->skip(($page - 1) * $perPage)

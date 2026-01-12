@@ -1,4 +1,4 @@
-{{-- Modal Create Obat - Material Design --}}
+
 <div id="medicineModal"
     class="hidden fixed inset-0 bg-gray-900/50 z-[60] flex items-center justify-center p-4 backdrop-blur-sm">
 
@@ -28,9 +28,9 @@
 
         <!-- Form Content -->
         <div class="overflow-y-auto p-6 bg-gray-50/50 flex-grow">
-            <form id="createMedicineForm" action="{{ route('admin.medicines.store') }}" method="POST" enctype="multipart/form-data"
+            <form id="createMedicineForm" action="<?php echo e(route('admin.medicines.store')); ?>" method="POST" enctype="multipart/form-data"
                 class="space-y-6">
-                @csrf
+                <?php echo csrf_field(); ?>
 
                 <!-- Error Alert Placeholder -->
                 <div id="createErrorContainer"
@@ -76,9 +76,9 @@
                             <label class="block text-xs font-bold text-gray-700 mb-1.5 ml-1">Kategori</label>
                             <select name="category" id="category_select2" class="w-full">
                                 <option value="">Pilih Kategori...</option>
-                                @foreach($existingCategories as $cat)
-                                    <option value="{{ $cat }}">{{ $cat }}</option>
-                                @endforeach
+                                <?php $__currentLoopData = $existingCategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($cat); ?>"><?php echo e($cat); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
 
@@ -429,4 +429,4 @@
             document.body.style.overflow = 'auto';
         }, 300);
     }
-</script>
+</script><?php /**PATH C:\laragon\www\SIA_TBPrakWeb\resources\views/admin/medicine/create.blade.php ENDPATH**/ ?>

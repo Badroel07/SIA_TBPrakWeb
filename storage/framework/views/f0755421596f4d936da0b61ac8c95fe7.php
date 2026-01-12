@@ -1,4 +1,4 @@
-{{-- Modal Edit Obat - Material Design --}}
+
 <div id="medicineEditModal"
     class="hidden fixed inset-0 bg-gray-900/50 z-[60] flex items-center justify-center p-4 backdrop-blur-sm">
 
@@ -29,8 +29,8 @@
         <!-- Form Content -->
         <div class="overflow-y-auto p-6 bg-gray-50/50 flex-grow">
             <form id="editMedicineForm" method="POST" enctype="multipart/form-data" class="space-y-6">
-                @csrf
-                @method('PUT')
+                <?php echo csrf_field(); ?>
+                <?php echo method_field('PUT'); ?>
 
                 <!-- Error Alert Placeholder -->
                 <div id="editErrorContainer"
@@ -76,9 +76,9 @@
                             <label class="block text-xs font-bold text-gray-700 mb-1.5 ml-1">Kategori</label>
                             <select name="category" id="edit-category-select2" class="w-full">
                                 <option value="">Pilih Kategori...</option>
-                                @foreach($existingCategories as $cat)
-                                    <option value="{{ $cat }}">{{ $cat }}</option>
-                                @endforeach
+                                <?php $__currentLoopData = $existingCategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($cat); ?>"><?php echo e($cat); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
 
@@ -305,7 +305,7 @@
 </style>
 
 <script>
-    const baseUrl = "{{ url('/') }}";
+    const baseUrl = "<?php echo e(url('/')); ?>";
 
     $(document).ready(function () {
 
@@ -332,7 +332,7 @@
             const formData = new FormData(form);
 
             fetch(form.action, {
-                method: 'POST', // Method spoofing is handled by @method('PUT') in blade, but FormData needs POST
+                method: 'POST', // Method spoofing is handled by <?php echo method_field('PUT'); ?> in blade, but FormData needs POST
                 body: formData, // FormData automatically sets Content-Type multipart/form-data
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest',
@@ -501,4 +501,4 @@
             document.body.style.overflow = 'auto';
         }, 300);
     }
-</script>
+</script><?php /**PATH C:\laragon\www\SIA_TBPrakWeb\resources\views/admin/medicine/edit.blade.php ENDPATH**/ ?>

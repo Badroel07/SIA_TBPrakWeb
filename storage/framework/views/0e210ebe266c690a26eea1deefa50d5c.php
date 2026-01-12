@@ -1,8 +1,6 @@
-@extends('admin.layouts.app')
+<?php $__env->startSection('title', 'Inventory Management'); ?>
 
-@section('title', 'Inventory Management')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
     <!-- Header & Actions -->
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
@@ -19,7 +17,7 @@
         </div>
     </div>
 
-    <form action="{{ route('admin.medicines.index') }}" method="GET" x-data="{
+    <form action="<?php echo e(route('admin.medicines.index')); ?>" method="GET" x-data="{
                                     searchTimeout: null,
                                     loading: false,
                                     performSearch() {
@@ -29,7 +27,7 @@
                                             const formData = new FormData($el);
                                             const params = new URLSearchParams(formData);
 
-                                            fetch('{{ route('admin.medicines.index') }}?' + params.toString(), {
+                                            fetch('<?php echo e(route('admin.medicines.index')); ?>?' + params.toString(), {
                                                 headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'text/html' }
                                             })
                                             .then(response => response.text())
@@ -41,7 +39,7 @@
                                                 if (newResults && currentResults) { currentResults.innerHTML = newResults.innerHTML; }
                                                 
                                                 // Update URL without reloading
-                                                window.history.pushState({}, '', '{{ route('admin.medicines.index') }}?' + params.toString());
+                                                window.history.pushState({}, '', '<?php echo e(route('admin.medicines.index')); ?>?' + params.toString());
                                                 
                                                 this.loading = false;
                                             })
@@ -62,7 +60,7 @@
                         class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#6200EA] transition-colors">
                         <span class="material-icons-round">search</span>
                     </span>
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama obat..."
+                    <input type="text" name="search" value="<?php echo e(request('search')); ?>" placeholder="Cari nama obat..."
                         @input="performSearch()"
                         class="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-800 focus:ring-2 focus:ring-[#6200EA] focus:border-transparent focus:bg-white transition-all outline-none">
                 </div>
@@ -76,7 +74,7 @@
                         <span class="material-icons-round text-base" x-show="!loading">search</span>
                         Cari
                     </button>
-                    <a href="{{ route('admin.medicines.index') }}"
+                    <a href="<?php echo e(route('admin.medicines.index')); ?>"
                         class="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg transition-colors flex items-center justify-center"
                         title="Reset Filter">
                         <span class="material-icons-round">restart_alt</span>
@@ -93,7 +91,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <!-- Category Filter -->
                     <div class="relative"
-                        x-data="{ open: false, selectedLabel: '{{ request('category') == 'all' ? 'Semua Kategori' : (request('category') ?: 'Semua Kategori') }}', selectedValue: '{{ request('category') ?: 'all' }}' }"
+                        x-data="{ open: false, selectedLabel: '<?php echo e(request('category') == 'all' ? 'Semua Kategori' : (request('category') ?: 'Semua Kategori')); ?>', selectedValue: '<?php echo e(request('category') ?: 'all'); ?>' }"
                         @click.outside="open = false">
 
                         <input type="hidden" name="category" x-model="selectedValue" @change="performSearch()">
@@ -114,21 +112,22 @@
                                 Semua Kategori
                             </a>
 
-                            @foreach($categories as $cat)
+                            <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <a href="#"
                                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 hover:text-[#6200EA]"
-                                    @click.prevent="selectedLabel = '{{ $cat }}'; selectedValue = '{{ $cat }}'; open = false; performSearch()">
-                                    {{ $cat }}
+                                    @click.prevent="selectedLabel = '<?php echo e($cat); ?>'; selectedValue = '<?php echo e($cat); ?>'; open = false; performSearch()">
+                                    <?php echo e($cat); ?>
+
                                 </a>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>
                     </div>
 
                     <!-- Sort Filter -->
                     <div class="relative" x-data="{ 
                                                     open: false, 
-                                                    sortBy: '{{ request('sort_by', 'created_at') }}',
-                                                    sortOrder: '{{ request('sort_order', 'desc') }}',
+                                                    sortBy: '<?php echo e(request('sort_by', 'created_at')); ?>',
+                                                    sortOrder: '<?php echo e(request('sort_order', 'desc')); ?>',
                                                     getLabel() {
                                                         if(this.sortBy === 'name' && this.sortOrder === 'asc') return 'Nama (A-Z)';
                                                         if(this.sortBy === 'name' && this.sortOrder === 'desc') return 'Nama (Z-A)';
@@ -188,8 +187,8 @@
 
     <!-- Table Card -->
     <div id="medicine-table-results" class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        @forelse($medicines as $item)
-            @if($loop->first)
+        <?php $__empty_1 = true; $__currentLoopData = $medicines; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+            <?php if($loop->first): ?>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead class="bg-gray-50/50 border-b border-gray-100">
@@ -204,61 +203,65 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100 text-sm">
-            @endif
+            <?php endif; ?>
                         <tr class="hover:bg-gray-50/50 transition-colors group">
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-4">
                                     <div
                                         class="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center overflow-hidden shrink-0">
-                                        @if($item->image)
-                                            <img src="{{ Storage::disk('public')->url($item->image) }}" alt="{{ $item->name }}"
+                                        <?php if($item->image): ?>
+                                            <img src="<?php echo e(Storage::disk('public')->url($item->image)); ?>" alt="<?php echo e($item->name); ?>"
                                                 class="w-full h-full object-cover">
-                                        @else
+                                        <?php else: ?>
                                             <span class="material-icons-round text-gray-400">medication</span>
-                                        @endif
+                                        <?php endif; ?>
                                     </div>
                                     <div>
-                                        <p class="font-bold text-gray-800">{{ $item->name }}</p>
-                                        <p class="text-xs text-gray-500">#{{ $item->id }}</p>
+                                        <p class="font-bold text-gray-800"><?php echo e($item->name); ?></p>
+                                        <p class="text-xs text-gray-500">#<?php echo e($item->id); ?></p>
                                     </div>
                                 </div>
                             </td>
                             <td class="px-6 py-4">
                                 <span
                                     class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#6200EA]/10 text-[#6200EA] whitespace-nowrap">
-                                    {{ $item->category }}
+                                    <?php echo e($item->category); ?>
+
                                 </span>
                             </td>
                             <td class="px-6 py-4 font-medium text-gray-800">
-                                Rp {{ number_format($item->price, 0, ',', '.') }}
+                                Rp <?php echo e(number_format($item->price, 0, ',', '.')); ?>
+
                             </td>
                             <td class="px-6 py-4 text-center">
-                                @if($item->stock <= 5)
+                                <?php if($item->stock <= 5): ?>
                                     <span
                                         class="inline-flex items-center gap-1 text-red-600 font-bold bg-red-50 px-2 py-0.5 rounded-full text-xs">
                                         <span class="material-icons-round text-[14px]">warning</span>
-                                        {{ $item->stock }}
+                                        <?php echo e($item->stock); ?>
+
                                     </span>
-                                @else
-                                    <span class="text-gray-600">{{ $item->stock }}</span>
-                                @endif
+                                <?php else: ?>
+                                    <span class="text-gray-600"><?php echo e($item->stock); ?></span>
+                                <?php endif; ?>
                             </td>
                             <td class="px-6 py-4 text-center text-gray-600">
-                                {{ $item->total_sold ?? 0 }}
+                                <?php echo e($item->total_sold ?? 0); ?>
+
                             </td>
                             <td class="px-6 py-4 text-right">
                                 <div class="flex items-center justify-end gap-2">
-                                    <button onclick="openMedicineDetailModal({{ $item->id }})"
+                                    <button onclick="openMedicineDetailModal(<?php echo e($item->id); ?>)"
                                         class="p-1.5 text-gray-500 hover:text-[#6200EA] hover:bg-[#6200EA]/10 rounded-lg transition-colors"
                                         title="Lihat Detail">
                                         <span class="material-icons-round text-lg">visibility</span>
                                     </button>
-                                    <button onclick="openMedicineEditModal({{ $item->id }})"
+                                    <button onclick="openMedicineEditModal(<?php echo e($item->id); ?>)"
                                         class="p-1.5 text-gray-500 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-colors"
                                         title="Edit">
                                         <span class="material-icons-round text-lg">edit</span>
                                     </button>
-                                    <button onclick="deleteMedicine({{ $item->id }}, '{{ addslashes($item->name) }}')"
+                                    <button onclick="deleteMedicine(<?php echo e($item->id); ?>, '<?php echo e(addslashes($item->name)); ?>')"
                                         class="p-1.5 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                                         title="Hapus">
                                         <span class="material-icons-round text-lg">delete</span>
@@ -266,18 +269,19 @@
                                 </div>
                             </td>
                         </tr>
-                        @if($loop->last)
+                        <?php if($loop->last): ?>
                                     </tbody>
                                 </table>
                             </div>
 
                             <!-- Pagination -->
                             <div class="px-6 py-4 border-t border-gray-100 bg-gray-50/30">
-                                {{ $medicines->links() }}
-                            </div>
-                        @endif
+                                <?php echo e($medicines->links()); ?>
 
-        @empty
+                            </div>
+                        <?php endif; ?>
+
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
             <!-- Empty State -->
             <div class="flex flex-col items-center justify-center py-16 text-center">
                 <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
@@ -291,7 +295,7 @@
                     Tambah Obat Baru
                 </button>
             </div>
-        @endforelse
+        <?php endif; ?>
     </div>
 
     <!-- Delete Confirmation Modal -->
@@ -376,12 +380,12 @@
             btnIcon.classList.add('animate-spin');
             btnText.textContent = 'Menghapus...';
 
-            fetch(`{{ url('/admin/medicines') }}/${deleteItemId}`, {
+            fetch(`<?php echo e(url('/admin/medicines')); ?>/${deleteItemId}`, {
                 method: 'DELETE',
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest',
                     'Accept': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>'
                 }
             })
                 .then(response => response.json())
@@ -408,10 +412,11 @@
         });
     </script>
 
-    @push('modals')
-        @include('components.detail_obat')
-        @include('admin.medicine.create')
-        @include('admin.medicine.edit')
-    @endpush
+    <?php $__env->startPush('modals'); ?>
+        <?php echo $__env->make('components.detail_obat', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+        <?php echo $__env->make('admin.medicine.create', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+        <?php echo $__env->make('admin.medicine.edit', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+    <?php $__env->stopPush(); ?>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin.layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\laragon\www\SIA_TBPrakWeb\resources\views/admin/medicine/index.blade.php ENDPATH**/ ?>

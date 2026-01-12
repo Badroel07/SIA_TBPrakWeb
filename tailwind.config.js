@@ -13,6 +13,9 @@ export default {
                 "primary-dark": "#1d4ed8", // blue-700
                 "background-light": "#f6f6f8",
                 "surface-light": "#ffffff",
+                "admin": "#6200EA", // Admin purple
+                "admin-dark": "#5000C0", // Admin purple dark
+                "admin-darker": "#3700B3", // Admin purple darker
             },
             fontFamily: {
                 "display": ["Parkinsans", "sans-serif"]
