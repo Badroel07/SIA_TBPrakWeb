@@ -114,9 +114,7 @@
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.98);
         }
 
         .hover-lift {
@@ -139,18 +137,9 @@
 
     <!-- Background Decorations -->
     <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-        <div
-            class="absolute -top-40 -right-40 w-[500px] h-[500px] bg-gradient-to-br from-blue-400/20 to-indigo-500/20 rounded-full blur-3xl animate-float">
-        </div>
-        <div class="absolute top-1/3 -left-40 w-[400px] h-[400px] bg-gradient-to-tr from-purple-400/15 to-pink-400/15 rounded-full blur-3xl animate-float"
-            style="animation-delay: 1.5s;"></div>
-        <div class="absolute -bottom-40 right-1/4 w-[350px] h-[350px] bg-gradient-to-tl from-cyan-400/15 to-blue-400/15 rounded-full blur-3xl animate-float"
-            style="animation-delay: 3s;"></div>
-
-        <!-- Geometric decorations -->
-        <div class="absolute top-40 right-20 w-64 h-64 border border-blue-200/20 rounded-full animate-rotate-slow"></div>
-        <div class="absolute bottom-40 left-20 w-48 h-48 border border-indigo-200/15 rounded-full animate-rotate-slow"
-            style="animation-direction: reverse;"></div>
+        <div class="absolute -top-40 -right-40 w-[500px] h-[500px] bg-gradient-to-br from-blue-100/40 to-indigo-100/40 rounded-full"></div>
+        <div class="absolute top-1/3 -left-40 w-[400px] h-[400px] bg-gradient-to-tr from-purple-100/30 to-pink-100/30 rounded-full"></div>
+        <div class="absolute -bottom-40 right-1/4 w-[350px] h-[350px] bg-gradient-to-tl from-cyan-100/30 to-blue-100/30 rounded-full"></div>
     </div>
 
     <!-- 1. HERO SECTION - Epic Modern -->
@@ -166,7 +155,7 @@
                 <div class="md:w-1/2 md:pr-10">
                     <!-- Badge with glow -->
                     <div
-                        class="inline-flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full text-sm font-bold mb-6 shadow-lg shadow-blue-500/30 animate-slide-up animate-pulse-glow">
+                        class="inline-flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full text-sm font-bold mb-6 shadow-lg shadow-blue-500/30 animate-slide-up">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd"
                                 d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
@@ -384,7 +373,6 @@
                                 @else
                                     <div class="w-full h-full flex items-center justify-center">
                                         <div class="relative">
-                                            <div class="absolute inset-0 bg-blue-400/20 rounded-full blur-xl animate-pulse"></div>
                                             <svg class="w-20 h-20 text-blue-300 relative z-10" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd"
                                                     d="M7 2a1 1 0 00-.707 1.707L7 4.414v3.758a1 1 0 01-.293.707l-4 4C.817 14.761 2.156 18 5.414 18H14.586c3.258 0 4.597-3.239 2.707-5.121l-4-4A1 1 0 0113 8.172V4.414l.707-.707A1 1 0 0013 2H7zm2 6.172V4h2v4.172a3 3 0 00.879 2.12l1.027 1.028a4 4 0 00-2.171.102l-.47.156a4 4 0 01-2.53 0l-.47-.156a4 4 0 00-2.172-.102l1.027-1.028A3 3 0 009 8.172z"

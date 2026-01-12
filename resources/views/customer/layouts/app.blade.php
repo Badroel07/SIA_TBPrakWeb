@@ -76,11 +76,6 @@ $mobile_inactive = 'block px-4 py-3 rounded-xl text-lg font-medium text-gray-700
 
         <!-- Top Info Banner - Enhanced with gradient -->
         <div class="bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 text-white py-2.5 text-sm hidden md:block w-full relative overflow-hidden">
-            <!-- Decorative pattern -->
-            <div class="absolute inset-0 opacity-10">
-                <div class="absolute top-0 left-1/4 w-32 h-32 bg-white rounded-full blur-3xl"></div>
-                <div class="absolute bottom-0 right-1/4 w-24 h-24 bg-white rounded-full blur-2xl"></div>
-            </div>
             <div class="px-4 sm:px-6 lg:px-8 flex justify-between items-center relative z-10">
                 <p class="flex items-center gap-2">
                     <svg class="w-4 h-4 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
@@ -241,21 +236,10 @@ $mobile_inactive = 'block px-4 py-3 rounded-xl text-lg font-medium text-gray-700
 
         <!-- Mobile Sidebar - Enhanced with Modern Animations -->
         <div x-show="sidebarOpen" x-transition:enter="transition ease-out duration-400 transform" x-transition:enter-start="-translate-x-full opacity-0" x-transition:enter-end="translate-x-0 opacity-100" x-transition:leave="transition ease-in duration-300 transform" x-transition:leave-start="translate-x-0 opacity-100" x-transition:leave-end="-translate-x-full opacity-0"
-            class="fixed inset-y-0 left-0 w-80 bg-white shadow-2xl flex flex-col z-[52] md:hidden overflow-hidden" x-cloak>
+            class="fixed inset-y-0 left-0 w-80 bg-white shadow-xl flex flex-col z-[52] md:hidden overflow-hidden" x-cloak>
 
-            <!-- Decorative Background Elements -->
-            <div class="absolute inset-0 overflow-hidden pointer-events-none">
-                <div class="absolute -top-20 -right-20 w-60 h-60 bg-gradient-to-br from-blue-400/20 to-indigo-400/20 rounded-full blur-3xl animate-pulse"></div>
-                <div class="absolute -bottom-20 -left-20 w-48 h-48 bg-gradient-to-tr from-purple-400/15 to-pink-400/15 rounded-full blur-3xl" style="animation: pulse 3s ease-in-out infinite; animation-delay: 1s;"></div>
-            </div>
-
-            <!-- Sidebar Header with Animated Logo -->
+            <!-- Sidebar Header -->
             <div class="relative px-6 flex items-center justify-between h-24 border-b border-gray-100/50 bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600">
-                <!-- Animated background pattern -->
-                <div class="absolute inset-0 opacity-20">
-                    <div class="absolute top-2 left-10 w-16 h-16 border border-white/30 rounded-full animate-ping" style="animation-duration: 3s;"></div>
-                    <div class="absolute bottom-2 right-16 w-8 h-8 border border-white/20 rounded-full animate-ping" style="animation-duration: 4s;"></div>
-                </div>
 
                 <div class="flex items-center gap-3 relative z-10">
                     <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-lg transform hover:scale-110 hover:rotate-6 transition-all duration-300">
@@ -425,12 +409,6 @@ $mobile_inactive = 'block px-4 py-3 rounded-xl text-lg font-medium text-gray-700
 
         <!-- Footer - Modernized -->
         <footer class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white py-8 mt-20 relative overflow-hidden">
-            <!-- Decorative elements -->
-            <div class="absolute inset-0 opacity-5">
-                <div class="absolute top-0 left-0 w-96 h-96 bg-blue-500 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
-                <div class="absolute bottom-0 right-0 w-96 h-96 bg-indigo-500 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
-            </div>
-
             <div class="px-4 sm:px-6 lg:px-8 relative z-10">
                 <div class="grid md:grid-cols-4 gap-10">
                     <!-- Brand Section -->

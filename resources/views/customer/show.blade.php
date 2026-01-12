@@ -115,9 +115,7 @@
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.98);
         }
 
         .gradient-border {
@@ -149,21 +147,11 @@
 
     <!-- Hero Background with Decorative Elements -->
     <div class="relative min-h-screen overflow-hidden">
-        <!-- Animated Background Blobs -->
+        <!-- Background Elements -->
         <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-            <div
-                class="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-blue-400/30 to-indigo-500/30 rounded-full blur-3xl animate-float">
-            </div>
-            <div class="absolute top-1/2 -left-40 w-80 h-80 bg-gradient-to-tr from-purple-400/20 to-pink-400/20 rounded-full blur-3xl animate-float"
-                style="animation-delay: 1s;"></div>
-            <div class="absolute -bottom-40 right-1/3 w-72 h-72 bg-gradient-to-tl from-cyan-400/20 to-blue-400/20 rounded-full blur-3xl animate-float"
-                style="animation-delay: 2s;"></div>
-
-            <!-- Rotating decoration -->
-            <div class="absolute top-20 right-20 w-64 h-64 border border-blue-200/30 rounded-full animate-rotate-slow">
-            </div>
-            <div class="absolute top-20 right-20 w-48 h-48 border border-indigo-200/30 rounded-full animate-rotate-slow"
-                style="animation-direction: reverse;"></div>
+            <div class="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-blue-100/50 to-indigo-100/50 rounded-full"></div>
+            <div class="absolute top-1/2 -left-40 w-80 h-80 bg-gradient-to-tr from-purple-100/40 to-pink-100/40 rounded-full"></div>
+            <div class="absolute -bottom-40 right-1/3 w-72 h-72 bg-gradient-to-tl from-cyan-100/40 to-blue-100/40 rounded-full"></div>
         </div>
 
         <!-- Back Button - Floating Style -->
@@ -204,7 +192,7 @@
                         <div class="relative group">
                             <!-- Glowing background -->
                             <div
-                                class="absolute inset-0 bg-gradient-to-br from-blue-400 via-indigo-500 to-purple-500 rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500 animate-pulse-glow">
+                                class="absolute inset-0 bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-100 rounded-3xl opacity-50">
                             </div>
 
                             <!-- Image container -->
@@ -221,9 +209,7 @@
                                 @else
                                     <div class="w-full h-80 flex items-center justify-center">
                                         <div class="relative">
-                                            <div class="absolute inset-0 bg-blue-400/20 rounded-full blur-2xl animate-pulse">
-                                            </div>
-                                            <svg class="w-40 h-40 text-blue-400 relative z-10 animate-float" fill="currentColor"
+                                            <svg class="w-40 h-40 text-blue-400 relative z-10" fill="currentColor"
                                                 viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd"
                                                     d="M7 2a1 1 0 00-.707 1.707L7 4.414v3.758a1 1 0 01-.293.707l-4 4C.817 14.761 2.156 18 5.414 18H14.586c3.258 0 4.597-3.239 2.707-5.121l-4-4A1 1 0 0113 8.172V4.414l.707-.707A1 1 0 0013 2H7zm2 6.172V4h2v4.172a3 3 0 00.879 2.12l1.027 1.028a4 4 0 00-2.171.102l-.47.156a4 4 0 01-2.53 0l-.47-.156a4 4 0 00-2.172-.102l1.027-1.028A3 3 0 009 8.172z"
@@ -377,7 +363,7 @@
 
                         <!-- Floating icon -->
                         <div
-                            class="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-full blur-2xl opacity-30 group-hover:opacity-50 transition-opacity">
+                            class="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-full opacity-50">
                         </div>
 
                         <div class="relative z-10">
@@ -426,7 +412,7 @@
 
                         <!-- Floating icon -->
                         <div
-                            class="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-red-400 to-orange-500 rounded-full blur-2xl opacity-30 group-hover:opacity-50 transition-opacity">
+                            class="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-red-100 to-orange-100 rounded-full opacity-50">
                         </div>
 
                         <div class="relative z-10">

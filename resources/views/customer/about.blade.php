@@ -130,9 +130,7 @@
     }
 
     .glass-card {
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
+        background: rgba(255, 255, 255, 0.98);
     }
 
     .hover-lift {
@@ -153,15 +151,11 @@
     }
 </style>
 
-<!-- Animated Background -->
+<!-- Background -->
 <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-    <div class="absolute -top-40 -right-40 w-[500px] h-[500px] bg-gradient-to-br from-blue-400/30 to-indigo-500/30 rounded-full blur-3xl animate-float"></div>
-    <div class="absolute top-1/3 -left-40 w-[400px] h-[400px] bg-gradient-to-tr from-purple-400/20 to-pink-400/20 rounded-full blur-3xl animate-float" style="animation-delay: 1.5s;"></div>
-    <div class="absolute -bottom-40 right-1/4 w-[350px] h-[350px] bg-gradient-to-tl from-cyan-400/20 to-blue-400/20 rounded-full blur-3xl animate-float" style="animation-delay: 3s;"></div>
-
-    <!-- Rotating decorations -->
-    <div class="absolute top-40 right-20 w-64 h-64 border border-blue-200/30 rounded-full animate-rotate-slow"></div>
-    <div class="absolute bottom-40 left-20 w-48 h-48 border border-indigo-200/20 rounded-full animate-rotate-slow" style="animation-direction: reverse;"></div>
+    <div class="absolute -top-40 -right-40 w-[500px] h-[500px] bg-gradient-to-br from-blue-100/50 to-indigo-100/50 rounded-full"></div>
+    <div class="absolute top-1/3 -left-40 w-[400px] h-[400px] bg-gradient-to-tr from-purple-100/40 to-pink-100/40 rounded-full"></div>
+    <div class="absolute -bottom-40 right-1/4 w-[350px] h-[350px] bg-gradient-to-tl from-cyan-100/40 to-blue-100/40 rounded-full"></div>
 </div>
 
 <!-- 1. HERO SECTION - Epic Modern -->
@@ -220,7 +214,7 @@
                 <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-gradient-to-tr from-cyan-500 to-blue-500 rounded-2xl -z-10 animate-float" style="animation-delay: 1s;"></div>
 
                 <!-- Glowing border -->
-                <div class="absolute inset-0 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 rounded-3xl blur-xl opacity-30"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-blue-100 via-indigo-100 to-purple-100 rounded-3xl opacity-50"></div>
 
                 <div class="relative glass-card p-3 rounded-3xl shadow-2xl">
                     <img src="https://images.unsplash.com/photo-1585435557343-3b092031a831?q=80&w=1000&auto=format&fit=crop"
