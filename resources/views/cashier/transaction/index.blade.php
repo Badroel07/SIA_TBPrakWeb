@@ -144,7 +144,7 @@ x-data="cashierApp"
 
                 <!-- Infinite Scroll Sentinel -->
                 <div x-intersect.margin.200px="loadMore()" class="h-10 mt-6 flex justify-center w-full" 
-                     x-show="hasMore && !search">
+                     x-show="hasMore && !search && !isSearching">
                     <template x-if="loadingMore">
                         <svg class="animate-spin w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
