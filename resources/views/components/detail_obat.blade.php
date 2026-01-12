@@ -112,7 +112,7 @@
                         </div>
                         <div class="flex justify-between items-center py-2 border-b border-gray-100">
                             <span class="text-gray-500 text-sm">Stok</span>
-                            <span class="font-bold ${medicine.stock <= 10 ? 'text-red-500' : 'text-gray-800'}">
+                            <span class="font-bold ${medicine.stock <= 5 ? 'text-red-500' : 'text-gray-800'}">
                                 ${medicine.stock} Unit
                             </span>
                         </div>

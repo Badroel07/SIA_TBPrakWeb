@@ -177,8 +177,8 @@
                                 file:mr-4 file:py-2 file:px-4
                                 file:rounded-full file:border-0
                                 file:text-xs file:font-semibold
-                                file:bg-purple-50 file:text-purple-700
-                                hover:file:bg-purple-100
+                                file:bg-[#6200EA]/10 file:text-[#6200EA]
+                                hover:file:bg-[#6200EA]/20
                             " />
                         </div>
                     </div>
@@ -399,6 +399,8 @@
                     reader.onload = function (e) {
                         if (editImgPreview && editNoImg) {
                             editImgPreview.src = e.target.result;
+                            editImgPreview.style.display = 'block';
+                            editNoImg.style.display = 'none';
                             editImgPreview.classList.remove('hidden');
                             editNoImg.classList.add('hidden');
                         }
@@ -463,14 +465,15 @@
             const noImgSpan = document.getElementById('edit-no-image');
 
             if (data.image) {
-                img.src = data.image_url || data.image; // Use helper if available, or direct path logic
-                // Ensure helper creates correct public URL if needed
-                if (!img.src.startsWith('http')) img.src = '/storage/' + data.image;
-
+                img.src = data.image; 
+                img.style.display = 'block';
+                noImgSpan.style.display = 'none';
                 img.classList.remove('hidden');
                 noImgSpan.classList.add('hidden');
             } else {
                 img.src = '';
+                img.style.display = 'none';
+                noImgSpan.style.display = 'block';
                 img.classList.add('hidden');
                 noImgSpan.classList.remove('hidden');
             }

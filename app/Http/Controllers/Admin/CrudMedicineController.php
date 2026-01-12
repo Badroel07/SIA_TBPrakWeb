@@ -19,14 +19,7 @@ class CrudMedicineController extends Controller
         // Query dasar
         $query = Medicine::query();
 
-        // Logika Pencarian
-        if ($request->filled('search')) {
-            $searchTerm = $request->input('search');
-            $query->where('name', 'LIKE', '%' . $searchTerm . '%')
-                ->orWhere('description', 'LIKE', '%' . $searchTerm . '%');
-        }
-
-        // Logika Filter Kategori
+        // Logika Filter Kategori (HARUS SEBELUM SEARCH)
         if ($request->filled('category')) {
             $categoryFilter = $request->input('category');
 
@@ -34,6 +27,15 @@ class CrudMedicineController extends Controller
             if ($categoryFilter !== 'all') {
                 $query->where('category', $categoryFilter);
             }
+        }
+
+        // Logika Pencarian (setelah kategori)
+        if ($request->filled('search')) {
+            $searchTerm = $request->input('search');
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('name', 'LIKE', '%' . $searchTerm . '%')
+                  ->orWhere('description', 'LIKE', '%' . $searchTerm . '%');
+            });
         }
         // --- AKHIR PERUBAHAN ---
 

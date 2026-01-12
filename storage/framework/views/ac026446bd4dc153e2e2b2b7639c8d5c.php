@@ -110,13 +110,13 @@
                             <label class="block text-xs font-bold text-gray-700 mb-1.5 ml-1">Gambar Produk</label>
                             <div class="relative">
                                 <label id="image-upload-area"
-                                    class="flex items-center justify-center w-full h-32 px-4 transition bg-purple-50/30 border-2 border-purple-100 border-dashed rounded-xl appearance-none cursor-pointer hover:border-[#6200EA] hover:bg-purple-50 focus:outline-none group-hover:shadow-inner overflow-hidden">
+                                    class="flex items-center justify-center w-full h-32 px-4 transition bg-[#6200EA]/5 border-2 border-[#6200EA]/20 border-dashed rounded-xl appearance-none cursor-pointer hover:border-[#6200EA] hover:bg-[#6200EA]/10 focus:outline-none group-hover:shadow-inner overflow-hidden">
 
                                     <!-- Default Content -->
                                     <div id="image-upload-default" class="flex flex-col items-center space-y-1 py-4">
                                         <span
-                                            class="material-icons-round text-purple-500 text-3xl group-hover:scale-110 transition-transform">cloud_upload</span>
-                                        <span class="font-bold text-purple-700 text-sm">Klik untuk unggah gambar</span>
+                                            class="material-icons-round text-[#6200EA] text-3xl group-hover:scale-110 transition-transform">cloud_upload</span>
+                                        <span class="font-bold text-[#6200EA] text-sm">Klik untuk unggah gambar</span>
                                         <span class="text-xs text-gray-500">SVG, PNG, JPG atau GIF</span>
                                     </div>
 
@@ -360,6 +360,8 @@
                     const reader = new FileReader();
                     reader.onload = function (e) {
                         createImgPreview.src = e.target.result;
+                        createImgPreview.style.display = 'block';
+                        createImgDefault.style.display = 'none';
                         createImgPreview.classList.remove('hidden');
                         createImgDefault.classList.add('hidden');
                         createRemoveBtn.classList.remove('hidden');
@@ -372,6 +374,8 @@
                 e.preventDefault();
                 createImgInput.value = '';
                 createImgPreview.src = '#';
+                createImgPreview.style.display = 'none';
+                createImgDefault.style.display = 'flex';
                 createImgPreview.classList.add('hidden');
                 createImgDefault.classList.remove('hidden');
                 createRemoveBtn.classList.add('hidden');
@@ -400,8 +404,10 @@
         const def = document.getElementById('image-upload-default');
         const rmv = document.getElementById('remove-image-btn');
         if (preview) {
-            preview.classList.add('hidden');
             preview.src = '#';
+            preview.style.display = 'none';
+            def.style.display = 'flex';
+            preview.classList.add('hidden');
             def.classList.remove('hidden');
             rmv.classList.add('hidden');
         }

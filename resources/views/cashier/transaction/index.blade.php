@@ -82,7 +82,7 @@ x-data="cashierApp"
                                 class="relative h-40 w-full rounded-t-xl overflow-hidden bg-slate-100">
                                 <!-- Badge -->
                                 <div class="absolute top-2 left-2 px-2 py-1 rounded-md uppercase tracking-wider text-[10px] font-bold z-10"
-                                    :class="medicine.stock > 10 ? 'bg-emerald-100 text-emerald-800' : (medicine.stock > 0 ? 'bg-orange-100 text-orange-800' : 'bg-red-100 text-red-800')">
+                                    :class="medicine.stock > 5 ? 'bg-emerald-100 text-emerald-800' : (medicine.stock > 0 ? 'bg-orange-100 text-orange-800' : 'bg-red-100 text-red-800')">
                                     <span
                                         x-text="medicine.stock > 0 ? (medicine.stock > 5 ? 'Tersedia' : 'Stok Menipis') : 'Habis'"></span>
                                 </div>

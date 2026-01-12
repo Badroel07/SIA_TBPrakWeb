@@ -29,7 +29,7 @@ class TransactionController extends Controller
                 $query->where('name', 'LIKE', '%' . $searchTerm . '%');
                 
                 // For search, return all matching results (no pagination limit)
-                $medicines = $query->orderBy('name', 'asc')->get();
+                $medicines = $query->orderBy('stock', 'asc')->get();
                 
                 return response()->json([
                     'medicines' => $medicines,
@@ -44,7 +44,7 @@ class TransactionController extends Controller
             
             // Category filter is already applied above (for both search and pagination)
             
-            $medicines = $query->orderBy('name', 'asc')
+            $medicines = $query->orderBy('stock', 'asc')
                 ->skip(($page - 1) * $perPage)
                 ->take($perPage)
                 ->get();
@@ -81,14 +81,14 @@ class TransactionController extends Controller
         // --- AKHIR PERUBAHAN ---
 
         // Ambil data (15 item per halaman)
-        $medicines = $query->orderBy('name', 'asc')->paginate(15)->withQueryString();
+        $medicines = $query->orderBy('stock', 'asc')->paginate(15)->withQueryString();
 
         // Ambil semua kategori unik untuk filter dropdown
         $categories = Medicine::select('category')->distinct()->pluck('category');
 
         // Load only first 20 medicines initially (for Load More pagination)
         $initialMedicines = Medicine::select('id', 'name', 'price', 'stock', 'category', 'image', 'description', 'full_indication', 'usage_detail', 'side_effects', 'total_sold')
-            ->orderBy('name', 'asc')
+            ->orderBy('stock', 'asc')
             ->take(24)
             ->get();
 
