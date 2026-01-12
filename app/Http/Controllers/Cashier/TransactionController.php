@@ -16,7 +16,7 @@ class TransactionController extends Controller
     {
         // If AJAX request for loading more medicines or searching
         if ($request->ajax()) {
-            $query = Medicine::select('id', 'name', 'price', 'stock', 'category', 'image');
+            $query = Medicine::select('id', 'name', 'price', 'stock', 'category', 'image', 'description', 'full_indication', 'usage_detail', 'side_effects', 'total_sold');
             
             // Apply search if provided
             if ($request->filled('search')) {
@@ -85,7 +85,7 @@ class TransactionController extends Controller
         $categories = Medicine::select('category')->distinct()->pluck('category');
 
         // Load only first 20 medicines initially (for Load More pagination)
-        $initialMedicines = Medicine::select('id', 'name', 'price', 'stock', 'category', 'image')
+        $initialMedicines = Medicine::select('id', 'name', 'price', 'stock', 'category', 'image', 'description', 'full_indication', 'usage_detail', 'side_effects', 'total_sold')
             ->orderBy('name', 'asc')
             ->take(24)
             ->get();

@@ -74,6 +74,7 @@ x-data="cashierApp"
                     x-show="!isSearching && filteredMedicines.length > 0">
                     <template x-for="medicine in filteredMedicines" :key="medicine.id">
                         <div @click="addToCart(medicine)"
+                            x-data="{ infoHover: false }"
                             class="group flex flex-col bg-white rounded-xl shadow-sm border border-slate-100 hover:shadow-lg hover:border-primary/30 transition-all cursor-pointer h-full relative overflow-hidden"
                             :class="{'ring-2 ring-primary ring-offset-2': cart[medicine.id]}">
 
@@ -106,6 +107,14 @@ x-data="cashierApp"
                                             class="material-symbols-outlined text-4xl text-slate-400">medication</span>
                                     </div>
                                 </template>
+
+                                <!-- Info Button -->
+                                <button @click.stop="viewDetail(medicine)" 
+                                    @mouseenter="infoHover = true"
+                                    @mouseleave="infoHover = false"
+                                    class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 text-blue-600 hover:bg-blue-600 hover:text-white flex items-center justify-center shadow-lg backdrop-blur-sm transition-all z-20">
+                                    <span class="material-symbols-outlined text-[18px]">info</span>
+                                </button>
                             </div>
 
                             <div class="p-4 flex flex-col flex-1 gap-2">
@@ -123,7 +132,8 @@ x-data="cashierApp"
 
                                     <!-- Add Button or Qty Control if in cart -->
                                     <button
-                                       class="size-8 flex items-center justify-center bg-blue-50 text-blue-600 rounded-lg group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                                       :class="{ 'group-hover:bg-blue-600 group-hover:text-white': !infoHover }"
+                                       class="size-8 flex items-center justify-center bg-blue-50 text-blue-600 rounded-lg transition-colors duration-300">
                                         <span class="material-symbols-outlined text-[20px]">add</span>
                                     </button>
                                 </div>
@@ -301,6 +311,147 @@ x-data="cashierApp"
             </div>
         </div>
     </div>
+    <!-- Detail Modal -->
+    <div x-show="showDetailModal" class="fixed inset-0 z-50 overflow-hidden" x-cloak>
+        <div class="flex items-center justify-center min-h-screen p-4 text-center">
+            <div x-show="showDetailModal" 
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 transition-opacity bg-slate-900/75 bg-opacity-75 transition-opacity" @click="showDetailModal = false"></div>
+
+            <div x-show="showDetailModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                class="relative w-full max-w-5xl flex flex-col max-h-[90vh] text-left transition-all transform bg-white shadow-xl rounded-2xl overflow-hidden mt-12">
+                
+                <!-- Fixed Header -->
+                <div class="bg-blue-600 p-4 flex items-center justify-between flex-shrink-0 rounded-t-2xl">
+                    <h3 class="text-white font-bold text-lg flex items-center gap-2">
+                        <span class="material-symbols-outlined">medication</span>
+                        Detail Obat
+                    </h3>
+                    <button @click="showDetailModal = false" class="text-white/70 hover:text-white transition-colors">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+
+                <!-- Scrollable Content -->
+                <div class="p-6 overflow-y-auto custom-scrollbar flex-1">
+                    <template x-if="selectedMedicine">
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <!-- Left Column: Image & Basic Info -->
+                            <div class="space-y-6">
+                                <div class="aspect-square bg-white rounded-2xl border border-slate-100 p-4 flex items-center justify-center relative overflow-hidden shadow-sm">
+                                    <template x-if="selectedMedicine.image">
+                                        <img :src="'/storage/' + selectedMedicine.image" class="w-full h-full object-contain">
+                                    </template>
+                                    <template x-if="!selectedMedicine.image">
+                                        <span class="material-symbols-outlined text-6xl text-slate-200">medication</span>
+                                    </template>
+                                </div>
+
+                                <div class="text-center">
+                                    <h2 class="text-2xl font-bold text-slate-900 mb-2" x-text="selectedMedicine.name"></h2>
+                                    <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-bold uppercase tracking-wider" x-text="selectedMedicine.category"></span>
+                                </div>
+
+                                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 space-y-3">
+                                    <div class="flex justify-between items-center pb-3 border-b border-slate-200">
+                                        <span class="text-slate-500 font-medium flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-sm">payments</span>
+                                            Harga
+                                        </span>
+                                        <span class="font-bold text-slate-900 text-lg" x-text="'Rp ' + formatPrice(selectedMedicine.price)"></span>
+                                    </div>
+                                    <div class="flex justify-between items-center pb-3 border-b border-slate-200">
+                                        <span class="text-slate-500 font-medium flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-sm">inventory_2</span>
+                                            Stok
+                                        </span>
+                                        <span class="font-bold text-slate-900" x-text="selectedMedicine.stock + ' Unit'"></span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-slate-500 font-medium flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-sm">shopping_bag</span>
+                                            Terjual
+                                        </span>
+                                        <span class="font-bold text-purple-600" x-text="selectedMedicine.total_sold + ' Unit'"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right Column: Details -->
+                            <div class="lg:col-span-2 space-y-4">
+                                
+                                <!-- Description -->
+                                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+                                    <h4 class="flex items-center gap-2 font-bold text-slate-900 mb-3">
+                                        <span class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center">
+                                            <span class="material-symbols-outlined text-sm">info</span>
+                                        </span>
+                                        Deskripsi
+                                    </h4>
+                                    <p class="text-slate-600 text-sm leading-relaxed" x-text="selectedMedicine.description || '-'"></p>
+                                </div>
+
+                                <!-- Indications -->
+                                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+                                    <h4 class="flex items-center gap-2 font-bold text-slate-900 mb-3">
+                                        <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center">
+                                            <span class="material-symbols-outlined text-sm">check_circle</span>
+                                        </span>
+                                        Indikasi & Manfaat
+                                    </h4>
+                                    <p class="text-slate-600 text-sm leading-relaxed" x-text="selectedMedicine.full_indication || '-'"></p>
+                                </div>
+
+                                <!-- Usage & Dosage -->
+                                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+                                    <h4 class="flex items-center gap-2 font-bold text-slate-900 mb-3">
+                                        <span class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center">
+                                            <span class="material-symbols-outlined text-sm">medical_services</span>
+                                        </span>
+                                        Penggunaan & Dosis
+                                    </h4>
+                                    <p class="text-slate-600 text-sm leading-relaxed" x-text="selectedMedicine.usage_detail || '-'"></p>
+                                </div>
+
+                                <!-- Side Effects -->
+                                <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+                                    <h4 class="flex items-center gap-2 font-bold text-slate-900 mb-3">
+                                        <span class="w-8 h-8 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center">
+                                            <span class="material-symbols-outlined text-sm">warning</span>
+                                        </span>
+                                        Efek Samping
+                                    </h4>
+                                    <p class="text-slate-600 text-sm leading-relaxed" x-text="selectedMedicine.side_effects || '-'"></p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Fixed Footer -->
+                <div class="p-6 border-t border-slate-100 bg-white flex justify-end flex-shrink-0 rounded-b-2xl">
+                    <template x-if="selectedMedicine">
+                        <button @click="addToCart(selectedMedicine); showDetailModal = false" 
+                            :disabled="selectedMedicine.stock <= 0"
+                            class="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-600/20 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <span class="material-symbols-outlined">add_shopping_cart</span>
+                            Tambah ke Keranjang
+                        </button>
+                    </template>
+                </div>
+            </div>
 @endsection
 
 @push('scripts')
@@ -323,6 +474,9 @@ x-data="cashierApp"
                 // Search state
                 isSearching: false,
                 searchResults: null,
+                // Detail Modal state
+                showDetailModal: false,
+                selectedMedicine: null,
 
 
 
@@ -547,6 +701,11 @@ x-data="cashierApp"
 
                 formatPrice(price) {
                     return new Intl.NumberFormat('id-ID').format(price);
+                },
+
+                viewDetail(medicine) {
+                    this.selectedMedicine = medicine;
+                    this.showDetailModal = true;
                 }
             }));
         });
