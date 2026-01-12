@@ -1,243 +1,156 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>@yield('title', 'Dasbor Admin') - ePharma</title>
-    @vite('resources/css/app.css')
 
     <!-- Fonts -->
-    @include('components.fonts.parkin')
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Parkinsans:wght@300..800&display=swap"
+        rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
 
     <!-- Scripts -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     
     <!-- Select2 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
+    
+    <!-- Styles -->
     <style>
-        .material-icons-round {
-            font-size: 24px;
-        }
-
-        .sidebar-link {
-            transition: all 0.3s ease;
-            border-left: 4px solid transparent;
-        }
-
-        .sidebar-link:hover,
-        .sidebar-link.active {
-            background: linear-gradient(90deg, rgba(98, 0, 234, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
-        }
-
-        .sidebar-link.active {
-            border-left-color: #6200EA;
-            color: #6200EA;
-        }
-
-        .sidebar-link:hover {
-            color: #6200EA;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #E2E8F0;
-            border-radius: 3px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #CBD5E1;
-        }
-
-        [x-cloak] {
-            display: none !important;
+        [x-cloak] { display: none !important; }
+        .font-display { font-family: 'Parkinsans', sans-serif; }
+        body { 
+            font-family: 'Parkinsans', sans-serif; 
+            zoom: 90%; 
+            height: 111.1vh;
         }
     </style>
+    @stack('styles')
 </head>
 
-<body class="bg-[#F3F4F6] text-slate-800 antialiased overflow-hidden" x-data="{ sidebarOpen: false }">
+<body class="bg-slate-100 font-sans text-slate-900 h-screen overflow-hidden flex" @yield('bodyAttributes')>
 
-    <!-- HEADER -->
-    <header
-        class="fixed w-full z-30 flex items-center justify-between h-16 px-4 md:px-6 bg-[#6200EA] shadow-lg shadow-purple-900/10">
-        <div class="flex items-center gap-3 w-64">
-            <button @click="sidebarOpen = !sidebarOpen" class="p-1 mr-2 text-white/80 hover:text-white lg:hidden">
-                <span class="material-icons-round text-2xl">menu</span>
-            </button>
-            <div class="flex items-center gap-2">
-                <img src="{{ asset('img/logo.png') }}" alt="ePharma Logo" class="w-8 h-8 object-contain bg-white rounded-lg p-1">
-                <h1 class="text-xl font-bold tracking-tight text-white">ePharma <span class="italic">Admin</span></h1>
+    <!-- SIDEBAR -->
+    <aside class="w-72 bg-white m-4 rounded-3xl shadow-xl flex flex-col shrink-0 relative overflow-hidden">
+        
+        <!-- Logo -->
+        <div class="p-8 flex items-center gap-3">
+            <div class="w-10 h-10 flex items-center justify-center bg-purple-600 text-white rounded-xl shadow-purple-200 shadow-lg">
+                <span class="material-symbols-outlined text-2xl">admin_panel_settings</span>
+            </div>
+            <div>
+                <h1 class="font-display font-bold text-xl leading-none tracking-tight">ePharma</h1>
+                <span class="text-xs text-slate-400 font-medium tracking-wider">ADMIN PANEL</span>
             </div>
         </div>
 
-        <div class="flex-1 flex justify-between items-center pl-4 lg:pl-10">
-            <!-- Search Bar (Hidden on mobile) -->
+        <!-- Navigation -->
+        <nav class="flex-1 px-4 space-y-3 overflow-y-auto py-4">
+            <p class="px-4 text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-2 font-display">Menu Utama</p>
 
+            <a href="{{ route('admin.dashboard') }}" 
+               class="flex items-center gap-4 px-4 py-4 rounded-2xl transition-all duration-300 group font-display {{ request()->routeIs('admin.dashboard') ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/30 translate-x-1' : 'text-slate-500 hover:bg-slate-50 hover:text-purple-600 hover:translate-x-1' }}">
+                <span class="material-symbols-outlined text-[22px] group-hover:scale-110 transition-transform">dashboard</span>
+                <span class="font-bold tracking-wide text-sm">Dasbor</span>
+            </a>
 
-            <!-- Right Actions -->
-            <div class="flex items-center gap-3 sm:gap-4 ml-auto">
+            <a href="{{ route('admin.medicines.index') }}" 
+               class="flex items-center gap-4 px-4 py-4 rounded-2xl transition-all duration-300 group font-display {{ request()->routeIs('admin.medicines.*') ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/30 translate-x-1' : 'text-slate-500 hover:bg-slate-50 hover:text-purple-600 hover:translate-x-1' }}">
+                <span class="material-symbols-outlined text-[22px] group-hover:scale-110 transition-transform">inventory_2</span>
+                <span class="font-bold tracking-wide text-sm">Inventaris</span>
+            </a>
 
-                <div class="flex items-center gap-3 pl-3 sm:pl-4 border-l border-white/20">
-                    <div class="text-right hidden md:block">
-                        <p class="text-sm font-semibold text-white leading-tight">
-                            {{ Auth::user()->name ?? 'Admin User' }}</p>
-                        <p class="text-xs text-white/70">Super Admin</p>
-                    </div>
-                    <div
-                        class="w-9 h-9 rounded-full bg-gradient-to-tr from-yellow-400 to-orange-500 p-[2px] shadow-sm cursor-pointer">
-                        <div
-                            class="w-full h-full rounded-full bg-white flex items-center justify-center overflow-hidden">
-                            <span class="font-bold text-[#6200EA]">{{ substr(Auth::user()->name ?? 'A', 0, 1) }}</span>
-                        </div>
-                    </div>
+            <a href="{{ route('admin.orders.index') }}" 
+               class="flex items-center gap-4 px-4 py-4 rounded-2xl transition-all duration-300 group font-display {{ request()->routeIs('admin.orders.*') ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/30 translate-x-1' : 'text-slate-500 hover:bg-slate-50 hover:text-purple-600 hover:translate-x-1' }}">
+                <span class="material-symbols-outlined text-[22px] group-hover:scale-110 transition-transform">shopping_cart</span>
+                <span class="font-bold tracking-wide text-sm">Pesanan</span>
+            </a>
+
+            <a href="{{ route('admin.users.index') }}" 
+               class="flex items-center gap-4 px-4 py-4 rounded-2xl transition-all duration-300 group font-display {{ request()->routeIs('admin.users.*') ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/30 translate-x-1' : 'text-slate-500 hover:bg-slate-50 hover:text-purple-600 hover:translate-x-1' }}">
+                <span class="material-symbols-outlined text-[22px] group-hover:scale-110 transition-transform">people</span>
+                <span class="font-bold tracking-wide text-sm">Pengguna</span>
+            </a>
+        </nav>
+
+        <!-- User Profile -->
+        <div class="p-4 mt-auto">
+            <div class="bg-slate-50 rounded-2xl p-4 border border-slate-100 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-bold text-sm">
+                    {{ substr(Auth::user()->name, 0, 2) }}
                 </div>
-            </div>
-        </div>
-    </header>
-
-    <div class="flex h-screen pt-16">
-        <!-- SIDEBAR -->
-        <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
-            class="fixed lg:static inset-y-0 left-0 w-64 bg-white border-r border-gray-200 shadow-sm z-20 transition-transform duration-300 pt-16 lg:pt-0 pb-1 flex flex-col">
-
-            <div class="flex flex-col flex-1 overflow-y-auto py-6 space-y-1">
-                <p class="px-6 text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Menu Utama</p>
-
-                <a href="{{ route('admin.dashboard') }}"
-                    class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm font-medium {{ request()->routeIs('admin.dashboard') ? 'active' : 'text-gray-600' }}">
-                    <span
-                        class="material-icons-round {{ request()->routeIs('admin.dashboard') ? '' : 'text-gray-400' }}">dashboard</span>
-                    Dasbor
-                </a>
-
-                <a href="{{ route('admin.medicines.index') }}"
-                    class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm font-medium {{ request()->routeIs('admin.medicines.*') ? 'active' : 'text-gray-600' }}">
-                    <span
-                        class="material-icons-round {{ request()->routeIs('admin.medicines.*') ? '' : 'text-gray-400' }}">inventory_2</span>
-                    Inventaris
-                </a>
-
-                <a href="{{ route('admin.orders.index') }}"
-                    class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm font-medium {{ request()->routeIs('admin.orders.*') ? 'active' : 'text-gray-600' }}">
-                    <span class="material-icons-round {{ request()->routeIs('admin.orders.*') ? '' : 'text-gray-400' }}">shopping_cart</span>
-                    Pesanan
-                </a>
-
-                <a href="{{ route('admin.users.index') }}"
-                    class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm font-medium {{ request()->routeIs('admin.users.*') ? 'active' : 'text-gray-600' }}">
-                    <span
-                        class="material-icons-round {{ request()->routeIs('admin.users.*') ? '' : 'text-gray-400' }}">people</span>
-                    Pengguna
-                </a>
-            </div>
-
-            <div class="p-4 border-t border-gray-100">
-                <!-- Help Card -->
-                <!-- <div
-                    class="bg-gradient-to-br from-[#6200EA] to-[#7C4DFF] rounded-xl p-4 text-white shadow-lg shadow-purple-500/20 relative overflow-hidden group mb-4">
-                    <div
-                        class="absolute -right-4 -top-4 w-16 h-16 bg-white/20 rounded-full blur-lg group-hover:bg-white/30 transition-all">
-                    </div>
-                    <div class="relative z-10">
-                        <p class="font-bold text-sm mb-1">Need Help?</p>
-                        <p class="text-xs text-white/80 mb-3">Check our docs</p>
-                        <button
-                            class="w-full py-1.5 bg-white text-[#6200EA] text-xs font-bold rounded-lg hover:bg-gray-50 transition-colors shadow-sm">Documentation</button>
-                    </div>
-                </div> -->
-
-                <!-- Logout -->
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-bold text-slate-900 truncate font-display">{{ Auth::user()->name }}</p>
+                    <p class="text-[10px] text-slate-500 truncate font-display tracking-wide uppercase">Super Admin</p>
+                </div>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit"
-                        class="flex items-center gap-3 px-2 py-2 text-sm font-medium text-red-500 hover:text-red-600 w-full hover:bg-red-50 rounded-lg transition-colors">
-                        <span class="material-icons-round">logout</span>
-                        Keluar
+                    <button type="submit" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-red-50 text-slate-400 hover:text-red-500 transition-colors" title="Logout">
+                        <span class="material-symbols-outlined text-[20px]">logout</span>
                     </button>
                 </form>
             </div>
-        </aside>
+        </div>
 
-        <!-- Overlay for mobile -->
-        <div x-show="sidebarOpen" @click="sidebarOpen = false" x-transition.opacity
-            class="fixed inset-0 bg-gray-900/50 z-10 lg:hidden" x-cloak></div>
+    </aside>
 
-        <!-- MAIN CONTENT -->
-        <main class="flex-1 overflow-y-auto bg-[#F3F4F6] p-6 lg:p-10 relative">
-            <div
-                class="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-purple-100/50 to-transparent pointer-events-none">
-            </div>
-
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 m-4 ml-0 bg-white rounded-3xl shadow-xl overflow-hidden relative flex flex-col border border-slate-100/50">
+        <div class="flex-1 overflow-y-auto p-6 lg:p-10 relative">
             <div class="relative max-w-7xl mx-auto space-y-6">
                 @yield('content')
             </div>
-        </main>
-    </div>
-
-    <!-- Global Toast Container -->
-    <div id="toast-container" class="fixed top-6 right-6 z-[100] flex flex-col gap-3 pointer-events-none"></div>
-
-    <script>
-        function showToast(type, message) {
-            const container = document.getElementById('toast-container');
-            const id = 'toast-' + Date.now();
-            
-            const colors = type === 'success' 
-                ? 'bg-white border-l-4 border-green-500 text-gray-800' 
-                : 'bg-white border-l-4 border-red-500 text-gray-800';
-            
-            const icon = type === 'success' ? 'check_circle' : 'error';
-            const iconColor = type === 'success' ? 'text-green-500' : 'text-red-500';
-
-            const toast = document.createElement('div');
-            toast.id = id;
-            toast.className = `${colors} shadow-lg rounded-lg p-4 flex items-center gap-3 transform transition-all duration-300 translate-x-full opacity-0 pointer-events-auto min-w-[300px] max-w-md`;
-            
-            toast.innerHTML = `
-                <span class="material-icons-round ${iconColor}">${icon}</span>
-                <p class="text-sm font-medium flex-1">${message}</p>
-                <button onclick="document.getElementById('${id}').remove()" class="text-gray-400 hover:text-gray-600 transition-colors">
-                    <span class="material-icons-round text-lg">close</span>
-                </button>
-            `;
-
-            container.appendChild(toast);
-
-            // Animate in
-            requestAnimationFrame(() => {
-                toast.classList.remove('translate-x-full', 'opacity-0');
-            });
-
-            // Auto dismiss
-            setTimeout(() => {
-                toast.classList.add('translate-x-full', 'opacity-0');
-                setTimeout(() => toast.remove(), 300);
-            }, 5000);
-        }
-
-        @if(session('success'))
-            document.addEventListener('DOMContentLoaded', () => showToast('success', "{{ session('success') }}"));
-        @endif
-        @if(session('error'))
-            document.addEventListener('DOMContentLoaded', () => showToast('error', "{{ session('error') }}"));
-        @endif
-    </script>
+        </div>
+    </main>
 
     @stack('modals')
     @stack('scripts')
+
+    <!-- Flash Messages (Top Right) -->
+    <div class="fixed top-4 right-4 z-[9999] flex flex-col gap-2 pointer-events-none">
+        @if (session('success'))
+            <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)"
+                class="bg-green-500 text-white px-6 py-4 rounded-2xl shadow-xl flex items-center gap-3 animate-slide-in-right pointer-events-auto">
+                <div class="p-2 bg-white/20 rounded-full">
+                    <span class="material-symbols-outlined">check_circle</span>
+                </div>
+                <div>
+                    <h4 class="font-bold font-display text-sm">Berhasil!</h4>
+                    <p class="text-xs text-green-100">{{ session('success') }}</p>
+                </div>
+                <button @click="show = false" class="ml-2 opacity-70 hover:opacity-100"><span class="material-symbols-outlined text-sm">close</span></button>
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)"
+                class="bg-red-500 text-white px-6 py-4 rounded-2xl shadow-xl flex items-center gap-3 animate-slide-in-right pointer-events-auto">
+                <div class="p-2 bg-white/20 rounded-full">
+                    <span class="material-symbols-outlined">error</span>
+                </div>
+                <div>
+                    <h4 class="font-bold font-display text-sm">Gagal!</h4>
+                    <p class="text-xs text-red-100">{{ session('error') }}</p>
+                </div>
+                <button @click="show = false" class="ml-2 opacity-70 hover:opacity-100"><span class="material-symbols-outlined text-sm">close</span></button>
+            </div>
+        @endif
+    </div>
+
 </body>
 
 </html>
